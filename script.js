@@ -23,10 +23,13 @@ import Tank from "./model/Tank.js";
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-// tank
-const tank = new Tank();
-const tank = new Image(50, 50);
-tank.src = "./assets/tank.png";
+// const img = new Image(50, 50);
+// img.src = "./assets/tank.png";
+
+tank
+const timage = new Image(50, 50);
+timage.src = "./assets/tank.png";
+const tank = new Tank(canvas.width/2, canvas.height - 30, 10, timage);
 
 // invader
 const invader = new Image(50, 50);
@@ -39,7 +42,7 @@ missile.src = "./assets/missile.png"
 // draw canvas
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(tank, canvas.width / 2 - 25, canvas.height - 60, 50, 50);
+  ctx.drawImage(img, canvas.width / 2 - 25, canvas.height - 60, 50, 50);
   window.requestAnimationFrame(draw);
 }
 
