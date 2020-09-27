@@ -4,12 +4,20 @@ class Missile extends Sprite {
     constructor(x, y, height, image) {
         super (x, y, width, height, image);
         this.visible = true;
+        this.dy = 0;
+        // press space bar
+        document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
     }
 
     draw(ctx) {
         if (this.visible) {
             super.draw(ctx);
         }
+    }
+
+    spacebarHandler(e, tank) {
+        this.visible = true;
+        this.dy = 7;
     }
 
     collides(invader) {

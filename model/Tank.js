@@ -8,13 +8,11 @@ class Tank extends Sprite {
         document.addEventListener("keyhold", this.keyHoldHandler.bind(this));
         // press key quickly
         document.addEventListener("keytap", this.keyTapHandler.bind(this));
-        // press space bar
-        document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
     }
 
     keyHoldHandler(e) {
         if (e.key === "Right" || e.key === "ArrowRight") {
-            this.dx = 7
+            this.dx = 7;
         } else if (e.key === "Left" || e.key === "ArrowLeft") {
             this.dx = -7;
         }
