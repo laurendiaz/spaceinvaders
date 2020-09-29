@@ -8,6 +8,8 @@ class Tank extends Sprite {
         document.addEventListener("keyhold", this.keyHoldHandler.bind(this));
         // press key quickly
         document.addEventListener("keytap", this.keyTapHandler.bind(this));
+        // press space bar
+        document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
     }
 
     keyHoldHandler(e) {
@@ -39,8 +41,8 @@ class Tank extends Sprite {
         }
     }
 
-    fire(missile) {
-        
+    fire(missile, e) {
+        //missile.;
     }
     
 }

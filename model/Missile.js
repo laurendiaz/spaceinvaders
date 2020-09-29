@@ -5,8 +5,6 @@ class Missile extends Sprite {
         super (x, y, width, height, image);
         this.visible = true;
         this.dy = 0;
-        // press space bar
-        document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
     }
 
     draw(ctx) {
