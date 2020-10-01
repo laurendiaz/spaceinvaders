@@ -1,18 +1,20 @@
 import Sprite from "./Sprite.js";
 
 class Tank extends Sprite {
-    constructor(x, y, height, image) {
-        super (x, y, width, height, image);
+    constructor(x, y, width, height, imagePath) {
+        super (x, y, width, height, imagePath);
+        console.log(imagePath);
         this.dx = 0;
         // press key and hold it down
-        document.addEventListener("keyhold", this.keyHoldHandler.bind(this));
+        document.addEventListener("keydown", this.keyHoldHandler.bind(this));
         // press key quickly
-        document.addEventListener("keytap", this.keyTapHandler.bind(this));
+        document.addEventListener("keyup", this.keyTapHandler.bind(this));
         // press space bar
-        document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
+        //document.addEventListener("spaceBar", this.spaceBarHandler.bind(this));
     }
 
     keyHoldHandler(e) {
+        console.log(e.key);
         if (e.key === "Right" || e.key === "ArrowRight") {
             this.dx = 7;
         } else if (e.key === "Left" || e.key === "ArrowLeft") {

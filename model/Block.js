@@ -1,18 +1,16 @@
 class Block {
-    constructor(x, y, width, height, image) {
+    constructor(x, y, width, height, imagePath) {
       this.x = x;
       this.y = y;
       this.height = height;
       this.width = width;
-      this.image = image;
+      console.log(imagePath);
+      this.image = new Image(this.width, this.height);
+      this.image.src = imagePath;
     }
   
     draw(ctx) {
-      ctx.beginPath();
-      ctx.rect(this.x, this.y, this.width, this.height);
-      //ctx.fillStyle = this.image;
-      ctx.fill();
-      ctx.closePath();
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
     // assume other has {x, y, width, height}

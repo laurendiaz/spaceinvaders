@@ -24,54 +24,30 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 // tank
-const timage = new Image(50, 50);
-timage.src = "./assets/tank.png";
-const tank = new Tank(canvas.width/2, canvas.height - 30, 10, timage);
+const tank = new Tank(canvas.width/2, canvas.height - 60, 50, 50, "./assets/tank.png");
 
-// are these going to be constants??
-// // invader
-// const iimage = new Image(50, 50);
-// iimage.src = "./assets/invader.png";
-// const invader = new Invader(canvas.width*Math.random(), canvas.height, 10, iimage);
-
-// // missile
-// const mimage = new Image(50, 50);
-// mimage.src = "./assets/missile.png";
-// // make 10 missiles? or just one and call it max 10 times?
+// invader
+const invader = new Invader(canvas.width/2, canvas.height - 60, 50, 50, "./assets/invader.png");
 
 const invaders = [];
 const maxMissile = 10;
 //is there a max number of invaders that will be on the canvas at once?
 
-let count = 0;
-while(count < 10) {
+//press space bar and construct one every time
+//subtract from total missiles you have
+//ignore once you get to zero
 
-}
+let missiles = 10;
 
 let score = 0;
 
 // draw canvas
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  Tank.draw(ctx);
-  Tank.move(canvas.width);
-  Missile.collides(Invader);
-  invaders.forEach((Invader) => {
-    Invader.draw(ctx);
-    score += Invader.collides(Missile);
-  });
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#0095DD";
-  ctx.fillText("Score: " + score, 8, 20);
-  ctx.drawImage(img, canvas.width / 2 - 25, canvas.height - 60, 50, 50);
-  // what does this do??
+  tank.draw(ctx);
+  tank.move(canvas.width);
+  invader.draw(ctx);
   window.requestAnimationFrame(draw);
 }
-
-const interval = setInterval(draw, 10);
-document.addEventListener("gameover", (_e) => {
-  clearInterval(interval);
-  window.alert("Game Over!");
-});
 
 draw();
