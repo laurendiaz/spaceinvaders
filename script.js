@@ -29,19 +29,43 @@ const tank = new Tank(canvas.width/2, canvas.height - 60, 50, 50, "./assets/tank
 // invader
 const invader = new Invader(canvas.width/2, canvas.height - 60, 50, 50, "./assets/invader.png");
 
-const invaders = [];
 const maxMissile = 10;
+let gameOver = 0;
 //is there a max number of invaders that will be on the canvas at once?
 
 //press space bar and construct one every time
 //subtract from total missiles you have
 //ignore once you get to zero
-
 let missiles = 10;
-
 let score = 0;
+document.addEventListener('keyup', event => {
+  if(event.code === 'Space' && missiles > 0) {
+    let missile = new Missile(tank.x, tank.y, tank.width, tank.height, "./assets/missile.png");
+    missile.draw(ctx);
+    missile.move(canvas.height);
+    missiles--;
+    console.log(missiles);
+    console.log('space pressed');
+  }
+})
 
-// draw canvas
+function invaders() {
+  console.log("pls");
+  let coward = Math.floor((Math.random() * 1) +0.5);
+  let invaders = new Invader(canvas.width/Math.random(), canvas.height, 50, 50, "./assets/invader.png");
+  invaders.draw(ctx);
+  invaders.attack(coward);
+}
+
+(function loop() {
+  var rand = Math.round(Math.random() * (3000 - 500));
+  setTimeout(function() {
+          invaders();
+          loop();  
+  }, rand);
+}());
+
+// draw (on) canvas
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   tank.draw(ctx);

@@ -7,11 +7,11 @@ class Invader extends Sprite {
         this.fall = true;
     }
 
-    // attack (fall) {
-    //     if (fall === 1) {
-            
-    //     }
-    // }
+    attack (fall) {
+        if (fall === 1) {
+            super.move(0, -7);
+        }
+    }
 
     collides (missile) {
         if (this.visible && this.intersects(ball)) {

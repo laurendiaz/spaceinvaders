@@ -4,7 +4,6 @@ class Block {
       this.y = y;
       this.height = height;
       this.width = width;
-      console.log(imagePath);
       this.image = new Image(this.width, this.height);
       this.image.src = imagePath;
     }

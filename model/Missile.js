@@ -1,21 +1,23 @@
 import Sprite from "./Sprite.js";
 
 class Missile extends Sprite {
-    constructor(x, y, height, image) {
+    constructor(x, y, width, height, image) {
         super (x, y, width, height, image);
         this.visible = true;
         this.dy = 0;
     }
 
-    draw(ctx) {
-        if (this.visible) {
-            super.draw(ctx);
-        }
+    move(canvasHeight) {
+        super.move(0, 7);
+        this.handleBoundary(canvasHeight);
     }
 
-    spacebarHandler(e, tank) {
-        this.visible = true;
-        this.dy = 7;
+    handleBoundary(canvasHeight) {
+        if (this.y < 0) {
+            this.y = 0;
+        } else if (this.y + this.height > canvasHeight) {
+            this.y = canvasHeight - this.height;
+        }
     }
 
     collides(invader) {
