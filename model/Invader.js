@@ -10,6 +10,8 @@ class Invader extends Sprite {
     attack (xSpeed) {
         if (this.coward === 1) {
             super.move(xSpeed, this.speed);
+        } else {
+            super.move(xSpeed, 0);
         }
     }
 

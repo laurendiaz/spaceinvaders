@@ -19,6 +19,12 @@ import Tank from "./model/Tank.js";
  * the game is over
  */
 
+// space invaders title
+let title = new Image(7, 7);
+title.src = './assets/spaceinvaderstitle.png';
+let gameOverTitle = new Image(7,7);
+gameOverTitle.src = './assets/gameover.png';
+
 // creating music
 function sound(path) {
   this.sound = document.createElement("audio");
@@ -47,14 +53,14 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 // creating tank
-const tank = new Tank(canvas.width/2, canvas.height - 60, 50, 50, "./assets/tank.png");
+const tank = new Tank(canvas.width/2, canvas.height - 70, 70, 70, "./assets/tank.png");
 
 // creating missiles
 let missiles = [];
 let numMissiles = 10;
 document.body.onkeyup = function(e) {
   if(e.keyCode === 32 && numMissiles > 0) {
-    let missile = new Missile(tank.x, tank.y, tank.width, tank.height, "./assets/missile.png");
+    let missile = new Missile(tank.x + 7, tank.y, 60, 80, "./assets/missile.png");
     missiles.push(missile);
     console.log(missiles);
     numMissiles--;
@@ -69,7 +75,7 @@ function invade() {
   backgroundMusic.play();
   let coward = Math.floor(Math.round(Math.random()));
   let speed = Math.random()*7;
-  invaders.push(new Invader(canvas.width*Math.random(), canvas.height-600, 50, 50, "./assets/invader.png", coward, speed));
+  invaders.push(new Invader(canvas.width*Math.random(), canvas.height-600, 50, 25, "./assets/invader.png", coward, speed));
 }
 (function loop() {
   var rand = Math.round(Math.random() * (5000 - 700));
@@ -88,7 +94,7 @@ let requestID;
 // draw (on) canvas
 function draw() {
   if(gameOver === 0) {
-    //numMissiles = 10 - missiles.length;
+    numMissiles = 10 - missiles.length;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     tank.draw(ctx);
     tank.move(canvas.width);
@@ -132,17 +138,16 @@ function draw() {
     });
   }
   if(gameOver === 1) {
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("GAME OVER!", 165, 300);
+    ctx.drawImage(gameOverTitle, 40, 200, 400, 200);
   }
 
 
-  // adding text
+  // adding other elements
+  ctx.drawImage(title, 40, -30, 400, 200);
   ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Invaders Shot Down: " + score, 10, 20);
-    ctx.fillText("Missiles Remaining: " + numMissiles, 10, 40)
+    ctx.fillStyle = "#FFDF00";
+    ctx.fillText("Invaders Shot Down: " + score, 10, 550);
+    ctx.fillText("Missiles Remaining: " + numMissiles, 10, 580)
   
   window.requestAnimationFrame(draw);
 }
