@@ -1,27 +1,24 @@
 import Sprite from "./Sprite.js";
 
 class Invader extends Sprite {
-    constructor(x, y, width, height, imagePath) {
+    constructor(x, y, width, height, imagePath, coward, speed) {
         super (x, y, width, height, imagePath);
-        this.visible = true;
-        this.fall = true;
+        this.coward = coward
+        this.speed = speed;
     }
 
-    attack (fall) {
-        if (fall === 1) {
-            super.move(0, -7);
+    attack () {
+        if (this.coward === 1) {
+            super.move(0, this.speed);
         }
     }
 
     collides (missile) {
-        if (this.visible && this.intersects(ball)) {
-            this.visible = false;
-            ball.collides(this);
+        if (this.intersects(missile)) {
             return true;
         }
         return false;
     }
-
 }
 
 export default Invader;

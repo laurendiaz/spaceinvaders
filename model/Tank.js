@@ -38,10 +38,6 @@ class Tank extends Sprite {
             this.x = canvasWidth - this.width;
         }
     }
-
-    fire(missile, e) {
-        //missile.;
-    }
     
 }
 
