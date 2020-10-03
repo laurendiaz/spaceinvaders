@@ -10,4 +10,4 @@ with the following behavior:
 - When a missile hits an invader, it destroys it.
 - When an invader reaches the bottom of the screen, the game is over.
 
-You can find the running page [Here](https://cs280fall20-homework.github.io/hw1-laurendiaz/)
+You can find the running page [here](https://cs280fall20-homework.github.io/hw1-laurendiaz/)
