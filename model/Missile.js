@@ -11,16 +11,7 @@ class Missile extends Sprite {
     }
 
     move(canvasHeight) {
-        super.move(0, -7);
-        //this.handleBoundary(canvasHeight);
-    }
-
-    updateNumMissiles(canvasHeight) {
-        if (this.y < 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        super.move(0, -10); 
     }
 
     collides(invader) {

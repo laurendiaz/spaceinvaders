@@ -7,9 +7,9 @@ class Invader extends Sprite {
         this.speed = speed;
     }
 
-    attack () {
+    attack (xSpeed) {
         if (this.coward === 1) {
-            super.move(0, this.speed);
+            super.move(xSpeed, this.speed);
         }
     }
 
