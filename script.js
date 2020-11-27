@@ -1,6 +1,7 @@
 import Invader from "./model/Invader.js";
 import Missile from "./model/Missile.js";
 import Tank from "./model/Tank.js";
+import Heart from "./model/Heart.js";
 
 /**
  * tank should move right and left at bottom of 
@@ -24,6 +25,8 @@ let title = new Image(7, 7);
 title.src = './assets/spaceinvaderstitle.png';
 let gameOverTitle = new Image(7,7);
 gameOverTitle.src = './assets/gameover.png';
+let instructions = new Image(7,7);
+instructions.src = './assets/instructions.png';
 
 // creating music
 function sound(path) {
@@ -55,10 +58,13 @@ const ctx = canvas.getContext("2d");
 // creating tank
 const tank = new Tank(canvas.width/2, canvas.height - 70, 70, 70, "./assets/tank.png");
 
+
 // creating missiles
+let start = false;
 let missiles = [];
 let numMissiles = 10;
 document.body.onkeyup = function(e) {
+  start = true;
   if(e.keyCode === 32 && numMissiles > 0) {
     let missile = new Missile(tank.x + 7, tank.y, 60, 80, "./assets/missile.png");
     missiles.push(missile);
@@ -69,13 +75,16 @@ document.body.onkeyup = function(e) {
   }
 }
 
+let livesSet = false;
+
 // creating invaders
 let invaders = [];
 function invade() {
   backgroundMusic.play();
   let coward = Math.floor(Math.round(Math.random()));
-  let speed = Math.random()*7;
-  invaders.push(new Invader(canvas.width*Math.random(), canvas.height-600, 50, 25, "./assets/invader.png", coward, speed));
+  let speed = Math.random()*5;
+  invaders.push(new Invader((canvas.width - 10)*Math.random(), canvas.height-600, 50, 25, "./assets/invader.png", coward, speed));
+  livesSet = false;
 }
 (function loop() {
   var rand = Math.round(Math.random() * (5000 - 700));
@@ -85,24 +94,53 @@ function invade() {
   }, rand);
 }());
 
-let gameOver = 0;
+let hearts = [];
+function live() {
+  hearts.push(new Heart(10, 500, 50, 30, "./assets/heart.png"));
+  hearts.push(new Heart(50, 500, 50, 30, "./assets/heart.png"));
+  hearts.push(new Heart(90, 500, 50, 30, "./assets/heart.png"));
+}
+live();
+
+
+
+let lives = 3;
+
 let score = 0;
 let deadInvaders = [];
 let deadMissiles = []; 
-let requestID;
 
 // draw (on) canvas
 function draw() {
-  if(gameOver === 0) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  tank.draw(ctx);
+  if(start === false) {
+    ctx.drawImage(instructions, 40, 200, 400, 200);
+    ctx.font = "13px Arial";
+    ctx.fillText("You get three lives.", 190, 300);
+    ctx.fillText("Press the space bar to launch missiles and the arrow bars to move side to side.", 10, 325);
+    ctx.fillText("Your missiles will replenish once they are off the screen or have struck an invader.", 7, 350)
+    ctx.fillText("You lose a life if an invader makes it to the bottom of the screen.", 65, 375)
+    ctx.fillText("Happy Space Invader Hunting :)", 150, 400);
+  }
+  if(lives !== 0) {
+    
     numMissiles = 10 - missiles.length;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    tank.draw(ctx);
+    
     tank.move(canvas.width);
+    hearts.forEach((heart) => {
+      heart.draw(ctx);
+
+    })
       invaders.forEach((invader) => {
         invader.draw(ctx);
         invader.attack(Math.floor(Math.random() * (1 - (-1) + 1)) + (-1));
-        if (invader.y > canvas.height) {
-          gameOver = 1;
+        if (invader.y > canvas.height && !livesSet) {
+          console.log(lives);
+          lives--;
+          hearts.pop();
+          invaders.splice(invaders.indexOf(invader), 1);
+          livesSet = true;
         }
         missiles.forEach((missile) => {
           missile.draw(ctx);
@@ -119,7 +157,7 @@ function draw() {
           }
         });
       });
-       
+      
     // getting rid of dead invaders and missiles
     invaders.forEach((invader) => {
       deadInvaders.forEach((dead) => {
@@ -133,11 +171,11 @@ function draw() {
       deadMissiles.forEach((dead) => {
         if(missile === dead) {
           missiles.splice(missiles.indexOf(missile), 1);
-         }
+        }
       });
     });
   }
-  if(gameOver === 1) {
+  if(lives === 0) {
     ctx.drawImage(gameOverTitle, 40, 200, 400, 200);
   }
 
