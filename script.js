@@ -27,6 +27,8 @@ let gameOverTitle = new Image(7,7);
 gameOverTitle.src = './assets/gameover.png';
 let instructions = new Image(7,7);
 instructions.src = './assets/instructions.png';
+let pressToStart = new Image(7,7);
+pressToStart.src = './assets/presstostart.png';
 
 // creating music
 function sound(path) {
@@ -75,16 +77,22 @@ document.body.onkeyup = function(e) {
   }
 }
 
+document.body.onkeydown = function(e) {
+  start = true;
+}
+
 let livesSet = false;
 
 // creating invaders
 let invaders = [];
 function invade() {
-  backgroundMusic.play();
-  let coward = Math.floor(Math.round(Math.random()));
-  let speed = Math.random()*5;
-  invaders.push(new Invader((canvas.width - 10)*Math.random(), canvas.height-600, 50, 25, "./assets/invader.png", coward, speed));
-  livesSet = false;
+  if(start === true) {
+    backgroundMusic.play();
+    let coward = Math.floor(Math.round(Math.random()));
+    let speed = Math.random()*5;
+    invaders.push(new Invader((canvas.width - 10)*Math.random(), canvas.height-600, 50, 25, "./assets/invader.png", coward, speed));
+    livesSet = false;
+  }
 }
 (function loop() {
   var rand = Math.round(Math.random() * (5000 - 700));
@@ -115,13 +123,15 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   tank.draw(ctx);
   if(start === false) {
-    ctx.drawImage(instructions, 40, 200, 400, 200);
+    ctx.drawImage(instructions, 40, 150, 400, 200);
     ctx.font = "13px Arial";
-    ctx.fillText("You get three lives.", 190, 300);
-    ctx.fillText("Press the space bar to launch missiles and the arrow bars to move side to side.", 10, 325);
-    ctx.fillText("Your missiles will replenish once they are off the screen or have struck an invader.", 7, 350)
-    ctx.fillText("You lose a life if an invader makes it to the bottom of the screen.", 65, 375)
-    ctx.fillText("Happy Space Invader Hunting :)", 150, 400);
+    ctx.fillText("You get three lives.", 190, 250);
+    ctx.fillText("Press the space bar to launch missiles and the arrow bars to move side to side.", 10, 275);
+    ctx.fillText("Your missiles will replenish once they are off the screen or have struck an invader.", 7, 300)
+    ctx.fillText("You lose a life if an invader makes it to the bottom of the screen.", 65, 325)
+    ctx.fillText("Happy Space Invader Hunting :)", 150, 350);
+    ctx.drawImage(pressToStart, 105, 300, 300, 200);
+
   }
   if(lives !== 0) {
     
